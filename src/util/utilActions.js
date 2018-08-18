@@ -63,6 +63,12 @@ const updateAllInStorage = (tasks) => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
+const getMatched = (pattern) => {
+    const tasks = getAllFromStorage();
+    const foundTasks = tasks.filter(task => task.description.toLowerCase().indexOf(pattern.toLowerCase()) > -1);
+    return foundTasks;
+}
+
 const addToStorage = (description) => {
     const oldTasks = getAllFromStorage();
     const task = { description, _id: generateUUID(), done: false };
