@@ -9,38 +9,40 @@ export const changeDescription = event => ({
 
 export const search = () => {
     return (dispatch, getState) => {
-        const description = getState().util.description
-        const search = description ? `&description__regex=/${description}/` : '' 
-        const request = axios.get(`${URL}?sort=-createdAt${search}`)
-            .then(resp => dispatch({type: 'UTIL_SEARCHED', payload: resp.data})) 
+        const description = getState().util.description;
+        if (description) {
+            dispatch({type: 'UTIL_SEARCHED', payload: getMatched(description) });
+        } else {
+            dispatch({type: 'UTIL_SEARCHED', payload: getAllFromStorage() });
+        }
     }
 }
 
 export const add = (description) => {
     return dispatch => {
-        axios.post(URL, { description })
-            .then(resp => dispatch(clear()))
-            .then(resp => dispatch(search()))
-        }
+        addToStorage(description);
+        dispatch(clear());
+        dispatch(search());
+    }
 }
 
 export const markAsDone = (util) => { 
     return dispatch => {
-        axios.put(`${URL}/${util._id}`, { ...util, done: true }) 
-            .then(resp => dispatch(search()))
+        markAsDoneInStorage(util._id);
+        dispatch(search());
     } 
 }
 export const markAsPending = (util) => { 
     return dispatch => {
-        axios.put(`${URL}/${util._id}`, { ...util, done: false }) 
-            .then(resp => dispatch(search()))
+        markAsPendingInStorage(util._id);
+        dispatch(search());
     } 
 }
 
 export const remove = (util) => {
     return dispatch => {
-        axios.delete(`${URL}/${util._id}`)
-            .then(resp => dispatch(search()))
+        removeInStorage(util._id);
+        dispatch(search());
     }
 }
 
