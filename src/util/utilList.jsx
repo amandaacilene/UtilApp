@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import IconButton from '../template/iconButton'
-import { markAsDone, markAsPending, remove} from './utilActions'
+import { markAsDone, markAsPending, remove, edit} from './utilActions'
 
 const UtilList = props => {
     const renderRows = () => {
@@ -12,6 +12,8 @@ const UtilList = props => {
             <tr key={util._id}>
                 <td className={util.done ? 'markAsDone' : ''}>{util.description}</td>
                 <td>
+                <IconButton style='edit' icon='edit' hide={util.done}
+                        onClick={() => props.edit(util)}></IconButton>
                     <IconButton style='success' icon='check' hide={util.done}
                         onClick={() => props.markAsDone(util)}></IconButton>
                     <IconButton style='warning' icon='undo' hide={!util.done}
@@ -38,5 +40,5 @@ const UtilList = props => {
 
 const mapStateToProps = state => ({list: state.util.list})
 const mapDispatchToProps = dispatch =>
-    bindActionCreators({ markAsDone, markAsPending, remove}, dispatch)
+    bindActionCreators({ markAsDone, markAsPending, remove, edit}, dispatch)
 export default connect(mapStateToProps, mapDispatchToProps)(UtilList)

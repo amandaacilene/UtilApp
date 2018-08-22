@@ -26,6 +26,12 @@ export const add = (description) => {
     }
 }
 
+export const edit = (description) => {
+    return dispatch => {
+        
+        }
+}
+
 export const markAsDone = (util) => { 
     return dispatch => {
         markAsDoneInStorage(util._id);

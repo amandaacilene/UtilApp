@@ -25,3 +25,16 @@
     padding-right: 35px;
     padding-left: 0px;
 }
+.btn.btn-edit{
+    background: #bd3737;
+}
+.btn.btn-edit{
+    width: 38px;
+    height: 34px;
+    color: #fff;
+    background: #de7676;
+}
+.btn.btn-success{
+    width: 38px;
+    height: 34px;
+}
